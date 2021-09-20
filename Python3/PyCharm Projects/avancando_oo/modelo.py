@@ -19,11 +19,17 @@ class Programa:
     def nome(self, novo_nome):
         self._nome = novo_nome.title()
 
+    def __str__(self):
+        return f'{self._nome} - {self.ano} - {self._likes} Likes'
+
 
 class Filme(Programa):
     def __init__(self, nome, ano, duracao):
         super().__init__(nome, ano)
         self.duracao = duracao
+
+    def __str__(self):
+        return f'{self._nome} - {self.ano} - {self.duracao} min - {self._likes} Likes'
 
     
     
@@ -33,22 +39,54 @@ class Serie(Programa):
         super().__init__(nome, ano)
         self.temporadas = temporadas
         
+    def __str__(self):
+        return f'{self._nome} - {self.ano} - {self.temporadas} temporadas - {self._likes} Likes'
+
+class Playlist:
+    def __init__(self, nome, programas):
+        self.nome = nome
+        self._programas = programas
+
+    def __getitem__(self, item):
+        return self._programas[item]
+
+    @property
+    def listagem(self):
+        return self._programas
+
+    @property
+    def tamanho(self):
+        return len(self._programas)
+        
+        
 
 
 
 atlanta = Serie('atlanta', 2018, 2)
 vingadores = Filme('vingadores - guerra infinita', 2018, 160)
+tmep = Filme('Todo mundo em pânico', 1999, 100)
+demolidor = Serie('Demolidor', 2016, 2)
+
 
 vingadores.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+demolidor.dar_like()
+demolidor.dar_like()
+demolidor.dar_like()
 vingadores.dar_like()
 atlanta.dar_like()
 atlanta.dar_like()
+atlanta.dar_like()
+atlanta.dar_like()
 
-print(f'Nome: {vingadores.nome} - Ano: {vingadores.ano} - Duração: {vingadores.duracao} - Likes: {vingadores.likes}')
-print(f'Nome: {atlanta.nome} - Ano: {atlanta.ano} - Temporadas: {atlanta.temporadas} - Likes: {atlanta.likes}')
+filmes_e_series = [vingadores, atlanta, demolidor, tmep]
+playlist_fim_de_semana = Playlist('fim de semana', filmes_e_series)
 
-filmes_e_series = [vingadores, atlanta]
 
-for programa in filmes_e_series:
-    detalhes = programa.duracao if hasattr(programa, 'duracao') else programa.temporadas
-    print(f'{programa.nome} - {detalhes} D - {programa.likes}')
+for programa in playlist_fim_de_semana.listagem:
+    # não importa o tipo do objeto, quando a função for chamada o objeto saberá se imprimir
+    print(programa)
