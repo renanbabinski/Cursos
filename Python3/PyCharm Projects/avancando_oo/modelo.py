@@ -22,20 +22,17 @@ class Programa:
 
 class Filme(Programa):
     def __init__(self, nome, ano, duracao):
-        self._nome = nome.title()
-        self.ano = ano
+        super().__init__(nome, ano)
         self.duracao = duracao
-        self._likes = 0
 
     
     
         
 class Serie(Programa):
     def __init__(self, nome, ano, temporadas):
-        self._nome = nome.title()
-        self.ano = ano
+        super().__init__(nome, ano)
         self.temporadas = temporadas
-        self._likes = 0
+        
 
 
 
@@ -49,3 +46,9 @@ atlanta.dar_like()
 
 print(f'Nome: {vingadores.nome} - Ano: {vingadores.ano} - Duração: {vingadores.duracao} - Likes: {vingadores.likes}')
 print(f'Nome: {atlanta.nome} - Ano: {atlanta.ano} - Temporadas: {atlanta.temporadas} - Likes: {atlanta.likes}')
+
+filmes_e_series = [vingadores, atlanta]
+
+for programa in filmes_e_series:
+    detalhes = programa.duracao if hasattr(programa, 'duracao') else programa.temporadas
+    print(f'{programa.nome} - {detalhes} D - {programa.likes}')
